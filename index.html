@@ -1,13 +1,131 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Faateh Clothing</title>
-    <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FAATEH</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: #fff;
+    }
+
+    .container {
+      text-align: center;
+      padding: 5rem 2rem;
+      max-width: 420px;
+      width: 90%;
+    }
+
+    h1 {
+      font-weight: 900;
+      font-size: 4rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+      text-shadow: 0 2px 4px rgba(255,255,255,0.1);
+    }
+
+    p {
+      color: #aaa;
+      margin-bottom: 3rem;
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    /* Social Icon Buttons */
+    .social {
+      display: inline-block;
+      margin: 0.5rem;
+      padding: 0.8rem;
+      border-radius: 50%;
+      background: #fff; /* white circle */
+      transition: opacity 0.2s ease;
+    }
+
+    .social img {
+      width: 24px;
+      height: 24px;
+      display: block;
+      filter: invert(1); /* ensures black PNG becomes white */
+    }
+
+    .social:hover {
+      opacity: 0.8;
+    }
+
+    /* Phone Buttons */
+    .phone {
+      display: block;
+      margin: 1rem 0;
+      padding: 1rem 2rem;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #fff;
+      background: #fff;
+      color: #000;
+      text-align: center;
+      transition: opacity 0.2s ease;
+    }
+
+    .phone:hover {
+      opacity: 0.8;
+    }
+
+    /* Online Store Placeholder */
+    .coming-soon {
+      color: #aaa;
+      background: transparent;
+      cursor: not-allowed;
+      opacity: 0.6;
+      font-style: italic;
+      padding: 0.5rem 0;
+      margin-top: 1.5rem;
+    }
+
+    footer {
+      margin-top: 3rem;
+      font-size: 0.8rem;
+      color: #555;
+    }
+  </style>
 </head>
-<body style="font-family: Arial; text-align: center;">
-    <h1>Welcome to Faateh</h1>
-    <p>Follow us on:</p>
-    <a href="https://www.instagram.com/faatehclothing/" target="_blank">Instagram</a> |
-    <a href="mailto:hello@faateh.in">Email</a>
+<body>
+  <div class="container">
+    <h1>FAATEH</h1>
+    <p>Clothing that defines you.</p>
+
+    <!-- Social Buttons with PNG Icons -->
+    <a class="social" href="https://www.instagram.com/faatehclothing/" target="_blank">
+      <img src="instagram.png" alt="Instagram" />
+    </a>
+    <a class="social" href="https://wa.me/917620994805" target="_blank">
+      <img src="whatsapp.png" alt="WhatsApp" />
+    </a>
+
+    <!-- Phone Buttons -->
+    <a class="phone" href="tel:+917620994805">+91 76209 94805</a>
+    <a class="phone" href="tel:+919145619699">+91 91456 19699</a>
+    <a class="phone" href="tel:+917276883238">+91 72768 83238</a>
+
+    <!-- Online Store Placeholder -->
+    <div class="coming-soon">Online Store (Coming Soon)</div>
+
+    <footer>
+      © 2025 Faateh. All rights reserved.
+    </footer>
+  </div>
 </body>
 </html>
