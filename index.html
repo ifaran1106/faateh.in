@@ -107,14 +107,10 @@
     <h1>FAATEH</h1>
     <p>Clothing that defines you.</p>
 
-   <!-- Social Buttons with Local Images -->
+   <!-- Social Buttons with Background Images -->
 <div class="social-icons">
-  <a class="social" href="https://www.instagram.com/faatehclothing/" target="_blank" aria-label="Instagram">
-    <img src="images/instagram.png" alt="Instagram" />
-  </a>
-  <a class="social" href="https://wa.me/917620994805" target="_blank" aria-label="WhatsApp">
-    <img src="images/whatsapp.png" alt="WhatsApp" />
-  </a>
+  <a class="social" href="https://www.instagram.com/faatehclothing/" target="_blank" aria-label="Instagram"></a>
+  <a class="social" href="https://wa.me/917620994805" target="_blank" aria-label="WhatsApp"></a>
 </div>
 
 <style>
@@ -131,17 +127,20 @@
     height: 48px;
     border-radius: 50%;
     background-color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background-size: 60%;
+    background-repeat: no-repeat;
+    background-position: center;
     transition: opacity 0.2s ease;
   }
 
-  .social img {
-    width: 24px;
-    height: 24px;
-    display: block;
-    filter: invert(1); /* makes black icon white */
+  /* Instagram icon */
+  .social[href*="instagram"] {
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png');
+  }
+
+  /* WhatsApp icon */
+  .social[href*="wa.me"] {
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg');
   }
 
   .social:hover {
