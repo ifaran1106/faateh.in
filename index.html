@@ -107,13 +107,48 @@
     <h1>FAATEH</h1>
     <p>Clothing that defines you.</p>
 
-    <!-- Social Buttons with PNG Icons -->
-    <a class="social" href="https://www.instagram.com/faatehclothing/" target="blank">
-      <img src="images/instagram.png" alt="Instagram" />
-    </a>
-    <a class="social" href="https://wa.me/917620994805" target="blank">
-      <img src="images/whatsapp.png" alt="WhatsApp" />
-    </a>
+   <!-- Social Buttons with Local Images -->
+<div class="social-icons">
+  <a class="social" href="https://www.instagram.com/faatehclothing/" target="_blank" aria-label="Instagram">
+    <img src="images/instagram.png" alt="Instagram" />
+  </a>
+  <a class="social" href="https://wa.me/917620994805" target="_blank" aria-label="WhatsApp">
+    <img src="images/whatsapp.png" alt="WhatsApp" />
+  </a>
+</div>
+
+<style>
+  .social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .social {
+    display: inline-block;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.2s ease;
+  }
+
+  .social img {
+    width: 24px;
+    height: 24px;
+    display: block;
+    filter: invert(1); /* makes black icon white */
+  }
+
+  .social:hover {
+    opacity: 0.8;
+  }
+</style>
+
 
     <!-- Phone Buttons -->
     <a class="phone" href="tel:+917620994805">+91 76209 94805</a>
