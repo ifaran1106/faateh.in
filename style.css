@@ -62,11 +62,27 @@ nav a.active, nav a:hover { color: #25D366; }
 
 .card:hover { transform: scale(1.03); }
 
-.card img {
+/* Maintain 9:16 portrait aspect ratio for images */
+.image-container {
+  position: relative;
   width: 100%;
-  height: 280px;
-  object-fit: cover;
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  border-radius: 12px;
 }
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.image-container img:hover {
+  transform: scale(1.05);
+}
+
 
 .sold-overlay {
   position: absolute;
