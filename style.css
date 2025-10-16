@@ -103,3 +103,46 @@ nav a.active, nav a:hover {
 
 .about, .contact { padding: 3rem 1rem; max-width: 800px; margin: auto; color: #ccc; }
 footer { padding: 2rem; color: #777; font-size: 0.9rem; }
+
+/* Contact Section Styling */
+.contact-section {
+  background-color: #f4f4f9;
+  padding: 60px 20px;
+  text-align: center;
+  border-top: 3px solid #eaeaea;
+}
+
+.contact-section h2 {
+  font-size: 36px;
+  margin-bottom: 30px;
+  color: #333;
+  font-family: 'Arial', sans-serif;
+}
+
+.contact-info p {
+  font-size: 18px;
+  margin: 15px 0;
+  color: #555;
+  font-family: 'Arial', sans-serif;
+}
+
+.contact-info a {
+  text-decoration: none;
+  color: #333;
+  transition: color 0.3s ease;
+}
+
+.contact-info a:hover {
+  color: #e1306c; /* Instagram's brand color */
+}
+
+.contact-info i {
+  margin-right: 10px;
+  font-size: 20px;
+  color: #e1306c;
+}
+
+.contact-info a:hover i {
+  color: #e1306c;
+}
+
