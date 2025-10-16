@@ -55,7 +55,7 @@ if (container) {
 
     let message = "Hey! I'm interested in these products:\n\n";
     selected.forEach(item => {
-      message += `• ${item.dataset.name} (${item.dataset.price})\n${item.dataset.image}\n\n`; // WhatsApp link
+      message += `• ${item.dataset.name} (${item.dataset.price})\n${item.dataset.whatsappImage}\n\n`; // WhatsApp link
     });
 
     const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
