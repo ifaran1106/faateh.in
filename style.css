@@ -62,7 +62,7 @@ nav a.active, nav a:hover { color: #25D366; }
 
 .card:hover { transform: scale(1.03); }
 
-.card img {instagram.png
+.card img {
   width: 100%;
   height: 280px;
   object-fit: cover;
