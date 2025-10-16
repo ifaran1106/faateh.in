@@ -5,14 +5,14 @@ const products = [
     name: "Perspective In Pieces",
     price: "₹699",
     image: "images/pes.jpg", // local image for website
-    whatsappImage: "https://raw.githubusercontent.com/ifaran1106/faateh.in/main/images/pes.jpg", // link for WhatsApp
+    whatsappImage: "https://raw.githubusercontent.com/ifaran1106/faateh.in/main/images/pes.jpg",
     soldOut: false
   },
   {
     name: "My Soul Has Been Sold",
     price: "₹699",
     image: "images/shs.jpg", // local image for website
-    whatsappImage: "https://raw.githubusercontent.com/ifaran1106/faateh.in/main/images/shs.jpg", // link for WhatsApp
+    whatsappImage: "https://raw.githubusercontent.com/ifaran1106/faateh.in/main/images/shs.jpg",
     soldOut: false
   }
 ];
@@ -49,14 +49,13 @@ if (container) {
     container.appendChild(card);
   });
 
-  // 🛒 Checkout button logic
   document.getElementById("checkoutBtn").addEventListener("click", () => {
     const selected = [...document.querySelectorAll(".select-product:checked")];
     if (selected.length === 0) return alert("Select at least one product first!");
 
     let message = "Hey! I'm interested in these products:\n\n";
     selected.forEach(item => {
-      // Use data-image (GitHub link) in the message
+      // Use data-image for WhatsApp message
       message += `• ${item.dataset.name} (${item.dataset.price})\n${item.dataset.image}\n\n`;
     });
 
