@@ -49,13 +49,15 @@ if (container) {
     container.appendChild(card);
   });
 
+  // 🛒 Checkout button logic
   document.getElementById("checkoutBtn").addEventListener("click", () => {
     const selected = [...document.querySelectorAll(".select-product:checked")];
     if (selected.length === 0) return alert("Select at least one product first!");
 
     let message = "Hey! I'm interested in these products:\n\n";
     selected.forEach(item => {
-      message += `• ${item.dataset.name} (${item.dataset.price})\n${item.dataset.whatsappImage}\n\n`; // WhatsApp link
+      // Use data-image (GitHub link) in the message
+      message += `• ${item.dataset.name} (${item.dataset.price})\n${item.dataset.image}\n\n`;
     });
 
     const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
