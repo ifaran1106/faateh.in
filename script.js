@@ -2,36 +2,30 @@ const phoneNumber = "917620994805";
 
 const products = [
   {
-    name: "Black Oversized Tee",
-    price: "₹799",
-    image: "https://via.placeholder.com/400x400?text=Black+Oversized+Tee",
+    name: "Perspective In Pieces",
+    price: "₹699",
+    image: "images/product1.jpg", // replace with your actual image path
     soldOut: false
   },
   {
-    name: "White Cargo Pants",
-    price: "₹1199",
-    image: "",
-    link: "https://via.placeholder.com/400x400?text=White+Cargo+Pants",
-    soldOut: true
-  },
-  {
-    name: "Street Hoodie",
-    price: "₹1499",
-    image: "https://via.placeholder.com/400x400?text=Street+Hoodie",
+    name: "My Soul Has Been Sold",
+    price: "₹699",
+    image: "images/product2.jpg", // replace with your actual image path
     soldOut: false
   }
 ];
 
 const container = document.getElementById("productList");
+
 if (container) {
   products.forEach(p => {
     const card = document.createElement("div");
     card.className = "card";
 
-    let imageHTML = p.image
+    const imageHTML = p.image
       ? `<img src="${p.image}" alt="${p.name}">`
-      : `<div style="height:280px;display:flex;align-items:center;justify-content:center;background:#111;">
-          <a href="${p.link}" target="_blank" class="btn">View Image</a>
+      : `<div style="height:280px; display:flex; align-items:center; justify-content:center; background:#111;">
+           <span>No Image</span>
          </div>`;
 
     card.innerHTML = `
@@ -43,13 +37,14 @@ if (container) {
         ${p.soldOut ? '' : `
           <div class="select-box">
             <label>
-              <input type="checkbox" class="select-product" data-name="${p.name}" data-price="${p.price}" data-image="${p.image || p.link}">
+              <input type="checkbox" class="select-product" data-name="${p.name}" data-price="${p.price}" data-image="${p.image}">
               Select
             </label>
           </div>
         `}
       </div>
     `;
+
     container.appendChild(card);
   });
 
