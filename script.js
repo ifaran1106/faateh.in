@@ -4,13 +4,13 @@ const products = [
   {
     name: "Perspective In Pieces",
     price: "₹699",
-    image: "images/pes.jpg", // single image
+    image: "images/pes.jpg", // replace with your actual image path
     soldOut: false
   },
   {
     name: "My Soul Has Been Sold",
     price: "₹699",
-    image: "images/shs.jpg", // single image
+    image: "images/shs.jpg", // replace with your actual image path
     soldOut: false
   }
 ];
@@ -22,10 +22,14 @@ if (container) {
     const card = document.createElement("div");
     card.className = "card";
 
+    const imageHTML = p.image
+      ? `<img src="${p.image}" alt="${p.name}">`
+      : `<div style="height:280px; display:flex; align-items:center; justify-content:center; background:#111;">
+           <span>No Image</span>
+         </div>`;
+
     card.innerHTML = `
-      <div class="image-container">
-        <img src="${p.image}" alt="${p.name}">
-      </div>
+      ${imageHTML}
       ${p.soldOut ? '<div class="sold-overlay">SOLD OUT</div>' : ''}
       <div class="card-content">
         <div class="product-name">${p.name}</div>
@@ -33,10 +37,7 @@ if (container) {
         ${p.soldOut ? '' : `
           <div class="select-box">
             <label>
-              <input type="checkbox" class="select-product" 
-                     data-name="${p.name}" 
-                     data-price="${p.price}" 
-                     data-image="${p.image}">
+              <input type="checkbox" class="select-product" data-name="${p.name}" data-price="${p.price}" data-image="${p.image}">
               Select
             </label>
           </div>
