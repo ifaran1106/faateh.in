@@ -1,165 +1,736 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FAATEH</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Faran Clothing — Shop</title>
 
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
-    body {
-      margin: 0;
-      font-family: 'Montserrat', Helvetica, Arial, sans-serif;
-      background: #000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      color: #fff;
+    /* ====== Reset & base ====== */
+    :root{
+      --bg:#000;
+      --card:#0f0f10;
+      --muted:#9b9b9b;
+      --accent:#25D366;
+      --white:#fff;
+      --glass: rgba(255,255,255,0.03);
+      --danger:#8b0000;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: var(--bg);
+      color:var(--white);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.35;
+      -webkit-tap-highlight-color: transparent;
+    }
+    a{color:inherit}
+    img{display:block;max-width:100%}
+
+    /* ====== Header ====== */
+    header{
+      position:sticky;
+      top:0;
+      z-index:60;
+      background:linear-gradient(180deg, rgba(0,0,0,0.95), rgba(0,0,0,0.8));
+      border-bottom:1px solid rgba(255,255,255,0.04);
+      backdrop-filter: blur(6px);
+    }
+    .topbar{
+      max-width:1200px;
+      margin:0 auto;
+      padding:12px 16px;
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .brand{
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+    .logo{
+      width:44px;
+      height:44px;
+      background:linear-gradient(135deg,#111,#222);
+      display:grid;
+      place-items:center;
+      border-radius:8px;
+      border:1px solid rgba(255,255,255,0.04);
+      font-weight:700;
+      letter-spacing:1px;
+    }
+    .brand h1{
+      font-size:14px;
+      margin:0;
+      letter-spacing:2px;
+    }
+    .brand p{margin:0;font-size:11px;color:var(--muted)}
+
+    /* ====== Controls ====== */
+    .controls{
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+    .search {
+      display:flex;
+      align-items:center;
+      background:var(--glass);
+      padding:6px 8px;
+      border-radius:10px;
+      gap:8px;
+      min-width:150px;
+    }
+    .search input{
+      background:transparent;border:0;outline:0;color:var(--white);font-size:13px;
+      width:140px;
+    }
+    .filter-select{
+      background:var(--glass);
+      color:var(--white);
+      border:0;padding:8px 10px;border-radius:10px;font-size:13px;
     }
 
-    .container {
-      text-align: center;
-      padding: 5rem 2rem;
-      max-width: 420px;
-      width: 90%;
+    /* ====== Main grid ====== */
+    main{max-width:1200px;margin:20px auto;padding:0 16px}
+    .layout{
+      display:grid;
+      gap:20px;
+      grid-template-columns: 1fr;
     }
 
-    h1 {
-      font-weight: 900;
-      font-size: 4rem;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      margin-bottom: 2rem;
-      text-shadow: 0 2px 4px rgba(255,255,255,0.1);
+    /* product grid */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap:16px;
     }
 
-    p {
-      color: #aaa;
-      margin-bottom: 3rem;
-      font-size: 1.1rem;
-      line-height: 1.6;
+    /* card */
+    .card{
+      background:var(--card);
+      border-radius:12px;
+      overflow:hidden;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+      transition: transform .18s ease, box-shadow .18s ease;
+      position:relative;
+      border:1px solid rgba(255,255,255,0.03);
     }
-
-    /* Social Icon Buttons */
-    .social {
-      display: inline-block;
-      margin: 0.5rem;
-      padding: 0.8rem;
-      border-radius: 50%;
-      background: #fff; /* white circle */
-      transition: opacity 0.2s ease;
+    .card:hover{ transform: translateY(-6px); box-shadow: 0 12px 36px rgba(0,0,0,0.7) }
+    .card-media{position:relative;height:260px;overflow:hidden; background:#080808}
+    .card-media img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s ease}
+    .card:hover .card-media img{ transform: scale(1.06) }
+    .sold-badge{
+      position:absolute;left:12px;top:12px;background:rgba(0,0,0,0.8);padding:6px 8px;border-radius:6px;font-weight:700;letter-spacing:2px;color:#fff;
+      border:1px solid rgba(255,255,255,0.04);
     }
+    .sold-overlay{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background: rgba(0,0,0,0.6); font-weight:800; font-size:18px; letter-spacing:2px; }
 
-    .social img {
-      width: 24px;
-      height: 24px;
-      display: block;
-      filter: invert(1); /* ensures black PNG becomes white */
+    .card-body{ padding:12px; display:flex; align-items:center; justify-content:space-between; gap:8px }
+    .info{flex:1}
+    .title{font-weight:700;font-size:14px;margin-bottom:6px}
+    .meta{font-size:13px;color:var(--muted)}
+    .price{ color:var(--accent); font-weight:700; margin-left:8px }
+
+    .actions{ display:flex; gap:8px; align-items:center }
+    button.btn{
+      background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 10px;border-radius:8px;color:var(--white);font-weight:700;cursor:pointer;
     }
+    button.btn.primary{ background:var(--accent); border-color:transparent; color:#000 }
+    button.btn.ghost{ background:transparent }
 
-    .social:hover {
-      opacity: 0.8;
+    /* cart drawer */
+    .cart-float{
+      position:fixed; right:18px; bottom:18px; z-index:80;
     }
-
-    /* Phone Buttons */
-    .phone {
-      display: block;
-      margin: 1rem 0;
-      padding: 1rem 2rem;
-      border-radius: 999px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 1rem;
-      color: #fff;
-      background: #fff;
-      color: #000;
-      text-align: center;
-      transition: opacity 0.2s ease;
+    .cart-button{
+      background:linear-gradient(180deg,var(--accent), #1fbf57);
+      border-radius:999px;padding:14px 18px;display:flex;gap:10px;align-items:center;box-shadow:0 8px 30px rgba(37,211,102,0.18);
+      cursor:pointer;border:0;font-weight:800;color:#000;
     }
+    .badge{ background:#000;color:var(--white);padding:6px 8px;border-radius:999px;font-weight:700; font-size:13px }
 
-    .phone:hover {
-      opacity: 0.8;
+    .drawer{
+      position:fixed; right:18px; bottom:80px; width:360px; max-width:calc(100% - 36px); background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:12px;padding:12px; box-shadow: 0 20px 60px rgba(0,0,0,0.7); display:none; z-index:85;
     }
+    .drawer.open{ display:block }
 
-    /* Online Store Placeholder */
-    .coming-soon {
-      color: #aaa;
-      background: transparent;
-      cursor: not-allowed;
-      opacity: 0.6;
-      font-style: italic;
-      padding: 0.5rem 0;
-      margin-top: 1.5rem;
+    .drawer .head{ display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+    .drawer .items{ max-height:320px; overflow:auto; padding-right:6px; margin-bottom:8px }
+    .cart-item{ display:flex; gap:8px; align-items:center;padding:8px;border-radius:8px;margin-bottom:8px;background:rgba(255,255,255,0.01) }
+    .cart-item img{width:60px;height:60px;object-fit:cover;border-radius:6px}
+    .qty{ display:flex; gap:6px; align-items:center }
+    .qty button{ padding:6px 8px;border-radius:6px;border:0;background:rgba(255,255,255,0.03); color:var(--white); cursor:pointer; font-weight:700 }
+
+    .subtotal{ display:flex;justify-content:space-between; font-weight:800; margin-bottom:8px }
+
+    .small{ font-size:12px;color:var(--muted) }
+
+    /* footer */
+    footer{ text-align:center; margin:28px 0 80px; color:var(--muted); font-size:13px }
+
+    /* floating social icons */
+    .socials{ position:fixed; left:12px; bottom:18px; display:flex; flex-direction:column; gap:10px; z-index:80 }
+    .socials a{ display:grid; place-items:center; width:44px;height:44px;border-radius:10px;background:var(--card); border:1px solid rgba(255,255,255,0.03); text-decoration:none }
+
+    /* responsive */
+    @media(min-width:880px){
+      .layout{ grid-template-columns: 1fr 360px; gap:24px }
+      .grid{ grid-template-columns: repeat(2, 1fr); }
     }
-
-    footer {
-      margin-top: 3rem;
-      font-size: 0.8rem;
-      color: #555;
+    @media(min-width:1100px){
+      .grid{ grid-template-columns: repeat(3, 1fr); }
+    }
+    @media(max-width:480px){
+      .grid{ grid-template-columns: 1fr 1fr }
+      .search input{ width:80px }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>FAATEH</h1>
-    <p>Clothing that defines you.</p>
 
-   <!-- Social Buttons with Background Images -->
-<div class="social-icons">
-  <a class="social" href="https://www.instagram.com/faatehclothing/" target="_blank" aria-label="Instagram"></a>
-  <a class="social" href="https://wa.me/917620994805" target="_blank" aria-label="WhatsApp"></a>
-</div>
+  <header>
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo">FC</div>
+        <div>
+          <h1>FARAN CLOTHING</h1>
+          <p>Street · Minimal · Drops</p>
+        </div>
+      </div>
 
-<style>
-  .social-icons {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-bottom: 2rem;
-  }
+      <div class="controls">
+        <div class="search" title="Search products">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="opacity:0.8" xmlns="http://www.w3.org/2000/svg"><path d="M21 21l-4.35-4.35" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="11.5" cy="11.5" r="6.5" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <input id="q" type="search" placeholder="Search" aria-label="Search"/>
+        </div>
 
-  .social {
-    display: inline-block;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background-color: #fff;
-    background-size: 60%;
-    background-repeat: no-repeat;
-    background-position: center;
-    transition: opacity 0.2s ease;
-  }
+        <select id="category" class="filter-select" title="Filter category">
+          <option value="all">All</option>
+        </select>
+      </div>
+    </div>
+  </header>
 
-  /* Instagram icon */
-  .social[href*="instagram"] {
-    background-image: url('https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png');
-  }
+  <main>
+    <div class="layout">
+      <section>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+          <div>
+            <h2 style="margin:0">Shop</h2>
+            <p class="small" style="margin:6px 0 0">Tap products to view quick actions. Select quantity in cart before checkout.</p>
+          </div>
+          <div style="color:var(--muted);font-size:13px">Free WhatsApp orders • No server</div>
+        </div>
 
-  /* WhatsApp icon */
-  .social[href*="wa.me"] {
-    background-image: url('https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg');
-  }
+        <div id="grid" class="grid" aria-live="polite"></div>
+      </section>
 
-  .social:hover {
-    opacity: 0.8;
-  }
-</style>
+      <aside>
+        <!-- Quick info / promo -->
+        <div style="background:linear-gradient(180deg,#0f0f0f, #0b0b0b);border-radius:12px;padding:14px;border:1px solid rgba(255,255,255,0.03)">
+          <h3 style="margin:0 0 8px">Your Cart</h3>
+          <p class="small" style="margin:0 0 12px">Everything is stored in your browser. Click the cart button to open and checkout via WhatsApp.</p>
 
+          <div style="display:flex;gap:8px">
+            <button id="open-cart" class="btn primary" style="flex:1">Open Cart</button>
+            <button id="clear-cart" class="btn ghost">Clear</button>
+          </div>
 
-    <!-- Phone Buttons -->
-    <a class="phone" href="tel:+917620994805">+91 76209 94805</a>
-    <a class="phone" href="tel:+919145619699">+91 91456 19699</a>
-    <a class="phone" href="tel:+917276883238">+91 72768 83238</a>
+          <hr style="border:0;height:1px;background:rgba(255,255,255,0.03);margin:12px 0">
 
-    <!-- Online Store Placeholder -->
-    <div class="coming-soon">Online Store (Coming Soon)</div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <div style="border-radius:8px;padding:8px;background:var(--glass);width:64px;text-align:center">Payment</div>
+            <div>
+              <div style="font-weight:700">WhatsApp Orders</div>
+              <div class="small">Customer pays on delivery or in chat</div>
+            </div>
+          </div>
 
-    <footer>
-      © 2025 Faateh. All rights reserved.
-    </footer>
+        </div>
+
+        <!-- small about -->
+        <div style="height:16px"></div>
+        <div style="background:linear-gradient(180deg,#0f0f0f,#0b0b0b);border-radius:12px;padding:12px;border:1px solid rgba(255,255,255,0.03)">
+          <h4 style="margin:0 0 8px">Brand</h4>
+          <p class="small" style="margin:0">Clean fits, limited drops. DM on Instagram for collaborations.</p>
+          <div style="height:8px"></div>
+          <a href="#" id="instagramLink" class="small" style="color:var(--accent);text-decoration:none">@faran_clothing</a>
+        </div>
+      </aside>
+    </div>
+
+    <div id="emptyNote" style="display:none;text-align:center;padding:40px;color:var(--muted)">No products found.</div>
+  </main>
+
+  <div class="cart-float">
+    <button id="cartToggle" class="cart-button" aria-expanded="false">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="margin-right:8px"><path d="M6 6h15l-1.5 9h-11L3 3H1" stroke="#000" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span id="cartCount">0</span>
+    </button>
+
+    <div id="drawer" class="drawer" role="dialog" aria-modal="false" aria-label="Cart drawer">
+      <div class="head">
+        <div style="font-weight:800">Order Cart</div>
+        <div>
+          <button id="closeDrawer" class="btn ghost">Close</button>
+        </div>
+      </div>
+
+      <div class="items" id="cartItems"></div>
+
+      <div class="subtotal small">
+        <div>Subtotal</div>
+        <div id="subtotalVal">₹0</div>
+      </div>
+
+      <div style="display:flex;gap:8px">
+        <button id="checkoutBtn" class="btn primary" style="flex:1">Checkout on WhatsApp</button>
+        <button id="clearBtn" class="btn" title="Remove all items">Empty</button>
+      </div>
+    </div>
   </div>
+
+  <div class="socials">
+    <a id="waFloat" title="Message on WhatsApp" href="#" style="background:linear-gradient(180deg,var(--accent), #1fbf57)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M21 12.08c0 4.65-3.77 8.42-8.42 8.42-1.47 0-2.85-.37-4.07-1.02L3 21l1.52-5.52A8.34 8.34 0 0 1 3.58 12C3.58 7.35 7.35 3.58 12 3.58S20.42 7.35 20.42 12c0 .33-.02.66-.05.98" stroke="#000" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    <a id="igFloat" title="Instagram" href="#" style="background:linear-gradient(180deg,#222,#111)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="4" stroke="white" stroke-width="1.2"/><circle cx="12" cy="12" r="3" stroke="white" stroke-width="1.2"/><circle cx="17.5" cy="6.5" r="0.5" fill="white"/></svg></a>
+  </div>
+
+  <footer>© 2025 Faran Clothing — Built with ❤️ • WhatsApp orders</footer>
+
+  <script>
+    /* =========================
+       EDITABLE CONFIG
+       ========================= */
+
+    // Replace with your WhatsApp number (country code + number) e.g. 919876543210
+    const WHATSAPP_NUMBER = "91XXXXXXXXXX";
+
+    // Instagram page link (optional)
+    const INSTAGRAM_URL = "https://instagram.com/faran_clothing";
+
+    // Products array:
+    // image: must be a publicly accessible URL (imgur, cloudinary, or your hosting)
+    // soldOut: true disables cart/add
+    const PRODUCTS = [
+      {
+        id: "p-black-tee-001",
+        name: "Black Oversized Tee",
+        price: 799,
+        image: "https://via.placeholder.com/800x800?text=Black+Oversized+Tee",
+        category: "Tees",
+        soldOut: false,
+        desc: "100% cotton. Relaxed fit. Street drop."
+      },
+      {
+        id: "p-white-cargo-002",
+        name: "White Cargo Pants",
+        price: 1199,
+        image: "https://via.placeholder.com/800x800?text=White+Cargo+Pants",
+        category: "Bottoms",
+        soldOut: true,
+        desc: "Utility pockets. Tapered fit."
+      },
+      {
+        id: "p-street-hoodie-003",
+        name: "Street Hoodie",
+        price: 1499,
+        image: "https://via.placeholder.com/800x800?text=Street+Hoodie",
+        category: "Hoodies",
+        soldOut: false,
+        desc: "Soft fleece inside. Drop shoulder."
+      },
+      {
+        id: "p-denim-jkt-004",
+        name: "Denim Jacket",
+        price: 1999,
+        image: "https://via.placeholder.com/800x800?text=Denim+Jacket",
+        category: "Outerwear",
+        soldOut: false,
+        desc: "Vintage wash. Oversized."
+      },
+      {
+        id: "p-snapcap-005",
+        name: "Snapback Cap",
+        price: 399,
+        image: "https://via.placeholder.com/800x800?text=Snapback+Cap",
+        category: "Accessories",
+        soldOut: false,
+        desc: "Embossed logo. One size."
+      }
+    ];
+
+    /* =========================
+       APP LOGIC (do not edit unless you know what you're doing)
+       ========================= */
+
+    // cache DOM
+    const grid = document.getElementById("grid");
+    const categorySelect = document.getElementById("category");
+    const qInput = document.getElementById("q");
+    const cartCount = document.getElementById("cartCount");
+    const cartToggle = document.getElementById("cartToggle");
+    const drawer = document.getElementById("drawer");
+    const openCart = document.getElementById("open-cart");
+    const closeDrawer = document.getElementById("closeDrawer");
+    const cartItemsEl = document.getElementById("cartItems");
+    const subtotalVal = document.getElementById("subtotalVal");
+    const checkoutBtn = document.getElementById("checkoutBtn");
+    const clearBtn = document.getElementById("clearBtn");
+    const clearCartBtn = document.getElementById("clear-cart");
+    const emptyNote = document.getElementById("emptyNote");
+    const waFloat = document.getElementById("waFloat");
+    const igFloat = document.getElementById("igFloat");
+    const instagramLink = document.getElementById("instagramLink");
+
+    // cart data stored in localStorage
+    const CART_KEY = "faran_cart_v1";
+    let cart = loadCart();
+
+    // init
+    igFloat.href = INSTAGRAM_URL;
+    instagramLink.href = INSTAGRAM_URL;
+    waFloat.onclick = (e) => { e.preventDefault(); openWhatsAppDirect(); };
+
+    populateCategories();
+    renderProducts();
+    updateCartUI();
+
+    // ===== search & filter =====
+    qInput.addEventListener("input", () => renderProducts());
+    categorySelect.addEventListener("change", () => renderProducts());
+
+    function populateCategories(){
+      // get unique categories
+      const cats = new Set(PRODUCTS.map(p => p.category));
+      cats.forEach(c => {
+        const el = document.createElement("option");
+        el.value = c;
+        el.textContent = c;
+        categorySelect.appendChild(el);
+      });
+    }
+
+    function renderProducts(){
+      const q = qInput.value.trim().toLowerCase();
+      const cat = categorySelect.value;
+      grid.innerHTML = "";
+      let count = 0;
+
+      const filtered = PRODUCTS.filter(p => {
+        if (cat !== "all" && p.category !== cat) return false;
+        if (!q) return true;
+        return (p.name + " " + (p.desc||"") + " " + p.category).toLowerCase().includes(q);
+      });
+
+      if(filtered.length === 0) {
+        emptyNote.style.display = "block";
+      } else emptyNote.style.display = "none";
+
+      filtered.forEach(p => {
+        count++;
+        const card = document.createElement("article");
+        card.className = "card";
+        card.setAttribute("data-id", p.id);
+
+        const media = document.createElement("div");
+        media.className = "card-media";
+        media.innerHTML = `<img loading="lazy" src="${p.image}" alt="${escapeHtml(p.name)}">`;
+
+        const body = document.createElement("div");
+        body.className = "card-body";
+
+        const info = document.createElement("div");
+        info.className = "info";
+        info.innerHTML = `<div class="title">${escapeHtml(p.name)}</div>
+                          <div class="meta">${escapeHtml(p.category)} <span class="price">₹${formatNumber(p.price)}</span></div>`;
+
+        const actions = document.createElement("div");
+        actions.className = "actions";
+
+        const addBtn = document.createElement("button");
+        addBtn.className = "btn";
+        addBtn.textContent = "Add";
+        addBtn.title = "Add to cart";
+
+        const buyBtn = document.createElement("button");
+        buyBtn.className = "btn primary";
+        buyBtn.textContent = "Buy";
+        buyBtn.title = "Buy via WhatsApp";
+
+        // sold out handling
+        if(p.soldOut){
+          const sold = document.createElement("div");
+          sold.className = "sold-overlay";
+          sold.textContent = "SOLD OUT";
+          media.appendChild(sold);
+          addBtn.disabled = true;
+          buyBtn.disabled = true;
+          addBtn.style.opacity = 0.5;
+          buyBtn.style.opacity = 0.5;
+        }
+
+        // event listeners
+        addBtn.addEventListener("click", () => {
+          addToCart(p.id, 1);
+        });
+        buyBtn.addEventListener("click", () => {
+          // quick buy single product (open whatsapp with that product only)
+          quickBuy(p);
+        });
+
+        actions.appendChild(addBtn);
+        actions.appendChild(buyBtn);
+
+        body.appendChild(info);
+        body.appendChild(actions);
+
+        card.appendChild(media);
+        card.appendChild(body);
+
+        grid.appendChild(card);
+      });
+    }
+
+    // ===== Cart operations =====
+    function loadCart(){
+      try{
+        const raw = localStorage.getItem(CART_KEY);
+        return raw ? JSON.parse(raw) : [];
+      }catch(e){
+        console.error(e);
+        return [];
+      }
+    }
+
+    function saveCart(){
+      try{ localStorage.setItem(CART_KEY, JSON.stringify(cart)) }catch(e){}
+      updateCartUI();
+    }
+
+    function addToCart(productId, qty=1){
+      const product = PRODUCTS.find(p => p.id === productId);
+      if(!product) return;
+      if(product.soldOut) {
+        alert("This product is sold out.");
+        return;
+      }
+      const existing = cart.find(i => i.id === productId);
+      if(existing){
+        existing.qty += qty;
+      } else {
+        cart.push({ id: productId, qty: qty });
+      }
+      saveCart();
+      flashCart();
+    }
+
+    function removeFromCart(productId){
+      cart = cart.filter(i => i.id !== productId);
+      saveCart();
+    }
+
+    function setQty(productId, qty){
+      const ex = cart.find(i => i.id === productId);
+      if(!ex) return;
+      ex.qty = qty;
+      if(ex.qty <= 0) removeFromCart(productId);
+      saveCart();
+    }
+
+    function clearCart(){
+      if(!confirm("Clear your cart?")) return;
+      cart = [];
+      saveCart();
+    }
+
+    function getCartDetails(){
+      return cart.map(item => {
+        const p = PRODUCTS.find(pp => pp.id === item.id);
+        return {
+          id: item.id,
+          name: p ? p.name : "Unknown",
+          price: p ? p.price : 0,
+          image: p ? p.image : "",
+          qty: item.qty,
+          total: p ? p.price * item.qty : 0
+        };
+      });
+    }
+
+    // ===== Cart UI =====
+    function updateCartUI(){
+      const totalQty = cart.reduce((s, i) => s + i.qty, 0);
+      cartCount.textContent = totalQty;
+      renderDrawerItems();
+    }
+
+    function renderDrawerItems(){
+      const items = getCartDetails();
+      cartItemsEl.innerHTML = "";
+      if(items.length === 0){
+        cartItemsEl.innerHTML = `<div class="small" style="text-align:center;padding:18px;color:var(--muted)">Your cart is empty</div>`;
+      }else{
+        items.forEach(it => {
+          const el = document.createElement("div");
+          el.className = "cart-item";
+          el.innerHTML = `
+            <img src="${it.image}" alt="${escapeHtml(it.name)}">
+            <div style="flex:1">
+              <div style="font-weight:800">${escapeHtml(it.name)}</div>
+              <div class="small">₹${formatNumber(it.price)} • <span style="font-weight:800">₹${formatNumber(it.total)}</span></div>
+              <div style="height:8px"></div>
+              <div class="qty">
+                <button class="dec">−</button>
+                <div style="min-width:28px;text-align:center">${it.qty}</div>
+                <button class="inc">+</button>
+                <button class="btn" style="margin-left:8px;padding:6px 8px">Remove</button>
+              </div>
+            </div>
+          `;
+          // listeners
+          el.querySelector(".inc").addEventListener("click", () => {
+            setQty(it.id, it.qty + 1);
+          });
+          el.querySelector(".dec").addEventListener("click", () => {
+            setQty(it.id, it.qty - 1);
+          });
+          el.querySelector(".btn").addEventListener("click", () => {
+            removeFromCart(it.id);
+          });
+
+          cartItemsEl.appendChild(el);
+        });
+      }
+
+      // subtotal
+      const subtotal = items.reduce((s, it) => s + it.total, 0);
+      subtotalVal.textContent = `₹${formatNumber(subtotal)}`;
+      cartCount.textContent = cart.reduce((s, i) => s + i.qty, 0);
+    }
+
+    // flash animation when add
+    function flashCart(){
+      cartToggle.animate([{ transform: "scale(1)" }, { transform: "scale(1.08)" }, { transform: "scale(1)" }], { duration: 260 });
+    }
+
+    // drawer toggle events
+    cartToggle.addEventListener("click", () => {
+      drawer.classList.toggle("open");
+      cartToggle.setAttribute("aria-expanded", drawer.classList.contains("open"));
+    });
+    openCart.addEventListener("click", () => {
+      drawer.classList.add("open");
+    });
+    closeDrawer.addEventListener("click", () => {
+      drawer.classList.remove("open");
+    });
+    clearBtn.addEventListener("click", clearCart);
+    clearCartBtn.addEventListener("click", clearCart);
+
+    // checkout -> whatsapp
+    checkoutBtn.addEventListener("click", () => {
+      if(cart.length === 0){
+        alert("Your cart is empty. Add something first.");
+        return;
+      }
+      // open modal asking for customer info (simple prompt fallback)
+      openWhatsAppWithCart();
+    });
+
+    // quick buy single product
+    function quickBuy(product){
+      if(product.soldOut){
+        alert("This product is sold out.");
+        return;
+      }
+      const name = prompt("Your name (so we can start the order):", "");
+      const phone = prompt("Your phone number (optional):", "");
+      const qty = prompt("Quantity:", "1");
+      const qNum = parseInt(qty) || 1;
+
+      let message = `Hey! I'd like to order:\n\n• ${product.name} (₹${formatNumber(product.price)}) x ${qNum}\n${product.image}\n\n`;
+      message += `Qty: ${qNum}\n`;
+      message += `Name: ${name || "-"}\nPhone: ${phone || "-"}\n\n`;
+      message += `Please confirm availability & payment.`;
+
+      openWhatsAppUrl(message);
+    }
+
+    function openWhatsAppWithCart(){
+      // collect customer info
+      const cname = prompt("Your name:", "");
+      const cphone = prompt("Phone number (for delivery):", "");
+      const address = prompt("Delivery address (optional):", "");
+
+      const items = getCartDetails();
+      let message = `Hey! New order from website:\n\n`;
+      items.forEach(it => {
+        message += `• ${it.name} (₹${formatNumber(it.price)}) x ${it.qty}\n${it.image}\n\n`;
+      });
+      const subtotal = items.reduce((s, it) => s + it.total, 0);
+      message += `Subtotal: ₹${formatNumber(subtotal)}\n`;
+      message += `Name: ${cname || "-"}\nPhone: ${cphone || "-"}\nAddress: ${address || "-"}\n\n`;
+      message += `Please confirm availability and next steps.`;
+
+      openWhatsAppUrl(message);
+    }
+
+    function openWhatsAppDirect(){
+      const message = `Hello! I'm interested in your store.`;
+      openWhatsAppUrl(message);
+    }
+
+    function openWhatsAppUrl(message){
+      if(!WHATSAPP_NUMBER || WHATSAPP_NUMBER.includes("X")){
+        alert("Please replace the placeholder WHATSAPP_NUMBER in the code with your real number (e.g. 919876543210).");
+        return;
+      }
+      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+      window.open(url, "_blank");
+    }
+
+    // ===== helpers =====
+    function formatNumber(n){
+      return Number(n).toLocaleString('en-IN');
+    }
+    function escapeHtml(str){
+      if(!str) return "";
+      return String(str).replace(/[&<>"'`=\/]/g, function(s){
+        return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;",'/':'&#x2F;','`':'&#x60;','=':'&#x3D;'})[s];
+      });
+    }
+
+    // Save cart on any change to localStorage watchers
+    window.addEventListener("storage", () => { cart = loadCart(); updateCartUI(); });
+
+    // small UX: click product card => open quick details / add logic
+    grid.addEventListener("click", (ev) => {
+      const card = ev.target.closest(".card");
+      if(!card) return;
+      const id = card.getAttribute("data-id");
+      // show quick preview modal style (simple confirm)
+      const p = PRODUCTS.find(pp => pp.id === id);
+      if(!p) return;
+      const action = confirm(`${p.name}\n\n${p.desc || ""}\n\nPrice: ₹${formatNumber(p.price)}\n\nOK = Add to cart\nCancel = Quick buy`);
+      if(action) addToCart(p.id, 1);
+      else quickBuy(p);
+    });
+
+    // initial render
+    renderProducts();
+    updateCartUI();
+  </script>
+
 </body>
 </html>
