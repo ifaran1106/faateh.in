@@ -4,13 +4,15 @@ const products = [
   {
     name: "Perspective In Pieces",
     price: "₹699",
-    image: "images/pes.jpg", // replace with your actual image path
+    image: "images/pes.jpg", // local image for website
+    whatsappImage: "https://raw.githubusercontent.com/ifaran1106/faateh.in/main/images/pes.jpg", // link for WhatsApp
     soldOut: false
   },
   {
     name: "My Soul Has Been Sold",
     price: "₹699",
-    image: "images/shs.jpg", // replace with your actual image path
+    image: "images/shs.jpg", // local image for website
+    whatsappImage: "https://raw.githubusercontent.com/ifaran1106/faateh.in/main/images/shs.jpg", // link for WhatsApp
     soldOut: false
   }
 ];
@@ -22,14 +24,10 @@ if (container) {
     const card = document.createElement("div");
     card.className = "card";
 
-    const imageHTML = p.image
-      ? `<img src="${p.image}" alt="${p.name}">`
-      : `<div style="height:280px; display:flex; align-items:center; justify-content:center; background:#111;">
-           <span>No Image</span>
-         </div>`;
-
     card.innerHTML = `
-      ${imageHTML}
+      <div class="image-container">
+        <img src="${p.image}" alt="${p.name}">
+      </div>
       ${p.soldOut ? '<div class="sold-overlay">SOLD OUT</div>' : ''}
       <div class="card-content">
         <div class="product-name">${p.name}</div>
@@ -37,7 +35,10 @@ if (container) {
         ${p.soldOut ? '' : `
           <div class="select-box">
             <label>
-              <input type="checkbox" class="select-product" data-name="${p.name}" data-price="${p.price}" data-image="${p.image}">
+              <input type="checkbox" class="select-product" 
+                     data-name="${p.name}" 
+                     data-price="${p.price}" 
+                     data-image="${p.whatsappImage}"> <!-- GitHub link used here -->
               Select
             </label>
           </div>
@@ -54,7 +55,7 @@ if (container) {
 
     let message = "Hey! I'm interested in these products:\n\n";
     selected.forEach(item => {
-      message += `• ${item.dataset.name} (${item.dataset.price})\n${item.dataset.image}\n\n`;
+      message += `• ${item.dataset.name} (${item.dataset.price})\n${item.dataset.image}\n\n`; // WhatsApp link
     });
 
     const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
