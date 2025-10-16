@@ -4,13 +4,13 @@ const products = [
   {
     name: "Perspective In Pieces",
     price: "₹699",
-    images: ["images/pes1.jpg"], // multiple images
+    image: "images/pes.jpg", // single image
     soldOut: false
   },
   {
     name: "My Soul Has Been Sold",
     price: "₹699",
-    images: ["images/shs1.jpg"], // multiple images
+    image: "images/shs.jpg", // single image
     soldOut: false
   }
 ];
@@ -22,15 +22,10 @@ if (container) {
     const card = document.createElement("div");
     card.className = "card";
 
-    // default image (first one)
-    const imageHTML = `
-      <div class="image-container">
-        <img src="${p.images[0]}" alt="${p.name}">
-      </div>
-    `;
-
     card.innerHTML = `
-      ${imageHTML}
+      <div class="image-container">
+        <img src="${p.image}" alt="${p.name}">
+      </div>
       ${p.soldOut ? '<div class="sold-overlay">SOLD OUT</div>' : ''}
       <div class="card-content">
         <div class="product-name">${p.name}</div>
@@ -41,7 +36,7 @@ if (container) {
               <input type="checkbox" class="select-product" 
                      data-name="${p.name}" 
                      data-price="${p.price}" 
-                     data-image="${p.images[0]}">
+                     data-image="${p.image}">
               Select
             </label>
           </div>
@@ -50,17 +45,8 @@ if (container) {
     `;
 
     container.appendChild(card);
-
-    // 🎞️ cycle through images on click
-    const imgEl = card.querySelector("img");
-    let index = 0;
-    imgEl.addEventListener("click", () => {
-      index = (index + 1) % p.images.length;
-      imgEl.src = p.images[index];
-    });
   });
 
-  // 🛒 checkout button logic
   document.getElementById("checkoutBtn").addEventListener("click", () => {
     const selected = [...document.querySelectorAll(".select-product:checked")];
     if (selected.length === 0) return alert("Select at least one product first!");
