@@ -4,13 +4,13 @@ const products = [
   {
     name: "Perspective In Pieces",
     price: "₹699",
-    image: "images/product1.jpg", // replace with your actual image path
+    image: "pes.jpg", // replace with your actual image path
     soldOut: false
   },
   {
     name: "My Soul Has Been Sold",
     price: "₹699",
-    image: "images/product2.jpg", // replace with your actual image path
+    image: "shs.jpg", // replace with your actual image path
     soldOut: false
   }
 ];
