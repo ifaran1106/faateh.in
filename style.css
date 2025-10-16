@@ -101,6 +101,6 @@ nav a.active, nav a:hover {
   cursor: pointer;
 }
 
-.about, .contact { padding: 3rem 1rem; max-width: 800px; margin: auto; color: #ccc; }
+.about, .contact { padding: 10rem 1rem; max-width: 800px; margin: auto; color: #ccc; }
 footer { padding: 2rem; color: #777; font-size: 0.9rem; }
 
