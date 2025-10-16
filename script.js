@@ -4,13 +4,13 @@ const products = [
   {
     name: "Perspective In Pieces",
     price: "₹699",
-    images: ["images/pes1.jpg", "images/pes2.jpg", "images/pes3.jpg"], // multiple images
+    images: ["images/pes1.jpg"], // multiple images
     soldOut: false
   },
   {
     name: "My Soul Has Been Sold",
     price: "₹699",
-    images: ["images/shs1.jpg", "images/shs2.jpg", "images/shs3.jpg"], // multiple images
+    images: ["images/shs1.jpg"], // multiple images
     soldOut: false
   }
 ];
