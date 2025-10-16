@@ -4,13 +4,13 @@ const products = [
   {
     name: "Perspective In Pieces",
     price: "₹699",
-    image: "images/pes.jpg", // replace with your actual image path
+    images: ["images/pes1.jpg", "images/pes2.jpg", "images/pes3.jpg"], // multiple images
     soldOut: false
   },
   {
     name: "My Soul Has Been Sold",
     price: "₹699",
-    image: "images/shs.jpg", // replace with your actual image path
+    images: ["images/shs1.jpg", "images/shs2.jpg", "images/shs3.jpg"], // multiple images
     soldOut: false
   }
 ];
@@ -22,11 +22,12 @@ if (container) {
     const card = document.createElement("div");
     card.className = "card";
 
-    const imageHTML = p.image
-      ? `<img src="${p.image}" alt="${p.name}">`
-      : `<div style="height:280px; display:flex; align-items:center; justify-content:center; background:#111;">
-           <span>No Image</span>
-         </div>`;
+    // default image (first one)
+    const imageHTML = `
+      <div class="image-container">
+        <img src="${p.images[0]}" alt="${p.name}">
+      </div>
+    `;
 
     card.innerHTML = `
       ${imageHTML}
@@ -37,7 +38,10 @@ if (container) {
         ${p.soldOut ? '' : `
           <div class="select-box">
             <label>
-              <input type="checkbox" class="select-product" data-name="${p.name}" data-price="${p.price}" data-image="${p.image}">
+              <input type="checkbox" class="select-product" 
+                     data-name="${p.name}" 
+                     data-price="${p.price}" 
+                     data-image="${p.images[0]}">
               Select
             </label>
           </div>
@@ -46,8 +50,17 @@ if (container) {
     `;
 
     container.appendChild(card);
+
+    // 🎞️ cycle through images on click
+    const imgEl = card.querySelector("img");
+    let index = 0;
+    imgEl.addEventListener("click", () => {
+      index = (index + 1) % p.images.length;
+      imgEl.src = p.images[index];
+    });
   });
 
+  // 🛒 checkout button logic
   document.getElementById("checkoutBtn").addEventListener("click", () => {
     const selected = [...document.querySelectorAll(".select-product:checked")];
     if (selected.length === 0) return alert("Select at least one product first!");
