@@ -25,7 +25,6 @@
     <div class="cart-summary" id="cartSummary" style="display:none;">
       <div>Total: <span id="cartTotal">₹0</span></div>
       <div class="cart-actions">
-        <a href="#" id="checkoutStripe" class="btn">Pay by Card (Simulate)</a>
         <a href="#" id="checkoutWhatsapp" class="btn outline">Checkout via WhatsApp</a>
       </div>
     </div>
@@ -90,6 +89,7 @@
       updateCartCount();
     }
 
+    // WhatsApp checkout
     document.getElementById('checkoutWhatsapp').addEventListener('click', (e) => {
       e.preventDefault();
       const cart = getCart();
@@ -100,13 +100,6 @@
       });
       message += `Total: ₹${cart.reduce((s,i)=>s+i.priceNum*i.qty,0)}\n\nPlease confirm.`;
       window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
-    });
-
-    document.getElementById('checkoutStripe').addEventListener('click', (e) => {
-      e.preventDefault();
-      // Simulate card payment — opens checkout simulation page
-      if (getCart().length === 0) return alert('Cart empty');
-      window.location.href = 'checkout.html';
     });
 
     renderCart();
