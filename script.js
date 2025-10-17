@@ -1,65 +1,112 @@
-const phoneNumber = "917620994805";
+/* script.js
+ - Central product + cart management for the static site.
+ - Products are persisted in localStorage under key "faateh_products".
+ - Cart is stored under "faateh_cart".
+ - Replace phoneNumber with your WhatsApp number (country code + number, no +).
+*/
 
-const products = [
+const phoneNumber = "917620994805"; // replace if needed
+
+/* ---------- DEFAULT PRODUCTS (used when localStorage empty) ---------- */
+const defaultProducts = [
   {
+    id: "perspective",
     name: "Perspective In Pieces",
     price: "₹699",
-    image: "images/pes.jpg", // local image for website
-    whatsappImage: "https://raw.githubusercontent.com/ifaran1106/faateh.in/main/images/pes.jpg",
-    soldOut: false
+    priceNum: 699,
+    image: "images/pes.jpg",
+    description: "Limited streetwear drop — crafted for those who move with purpose."
   },
   {
+    id: "mysoul",
     name: "My Soul Has Been Sold",
     price: "₹699",
-    image: "images/shs.jpg", // local image for website
-    whatsappImage: "https://raw.githubusercontent.com/ifaran1106/faateh.in/main/images/shs.jpg",
-    soldOut: false
+    priceNum: 699,
+    image: "images/shs.jpg",
+    description: "A limited run — bold graphics, street-ready fit."
   }
 ];
 
-const container = document.getElementById("productList");
-
-if (container) {
-  products.forEach(p => {
-    const card = document.createElement("div");
-    card.className = "card";
-
-    card.innerHTML = `
-      <div class="image-container">
-        <img src="${p.image}" alt="${p.name}">
-      </div>
-      ${p.soldOut ? '<div class="sold-overlay">SOLD OUT</div>' : ''}
-      <div class="card-content">
-        <div class="product-name">${p.name}</div>
-        <div class="price">${p.price}</div>
-        ${p.soldOut ? '' : `
-          <div class="select-box">
-            <label>
-              <input type="checkbox" class="select-product" 
-                     data-name="${p.name}" 
-                     data-price="${p.price}" 
-                     data-image="${p.whatsappImage}"> <!-- GitHub link used here -->
-              Select
-            </label>
-          </div>
-        `}
-      </div>
-    `;
-
-    container.appendChild(card);
-  });
-
-  document.getElementById("checkoutBtn").addEventListener("click", () => {
-    const selected = [...document.querySelectorAll(".select-product:checked")];
-    if (selected.length === 0) return alert("Select at least one product first!");
-
-    let message = "Hey! I'm interested in these products:\n\n";
-    selected.forEach(item => {
-      // Use data-image for WhatsApp message
-      message += `• ${item.dataset.name} (${item.dataset.price})\n${item.dataset.image}\n\n`;
-    });
-
-    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-    window.open(url, "_blank");
-  });
+/* ---------- product storage helpers ---------- */
+function getProducts() {
+  const raw = localStorage.getItem('faateh_products');
+  if (!raw) {
+    saveProducts(defaultProducts);
+    return defaultProducts.slice();
+  }
+  try {
+    return JSON.parse(raw);
+  } catch (e) {
+    saveProducts(defaultProducts);
+    return defaultProducts.slice();
+  }
 }
+function saveProducts(arr) {
+  localStorage.setItem('faateh_products', JSON.stringify(arr));
+}
+
+/* ---------- cart helpers ---------- */
+function getCart() {
+  const raw = localStorage.getItem('faateh_cart');
+  if (!raw) return [];
+  try {
+    return JSON.parse(raw);
+  } catch(e) {
+    localStorage.removeItem('faateh_cart');
+    return [];
+  }
+}
+function saveCart(cart) {
+  localStorage.setItem('faateh_cart', JSON.stringify(cart));
+}
+function addToCart(product, qty = 1) {
+  if (!product) return;
+  const cart = getCart();
+  const idx = cart.findIndex(c => c.id === product.id);
+  if (idx >= 0) {
+    cart[idx].qty += qty;
+  } else {
+    cart.push({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      priceNum: product.priceNum || 0,
+      image: product.image,
+      qty: qty
+    });
+  }
+  saveCart(cart);
+}
+function updateCartQty(index, qty) {
+  const cart = getCart();
+  if (!cart[index]) return;
+  cart[index].qty = qty;
+  saveCart(cart);
+}
+function removeFromCart(index) {
+  const cart = getCart();
+  cart.splice(index, 1);
+  saveCart(cart);
+}
+function clearCart() {
+  localStorage.removeItem('faateh_cart');
+}
+
+/* ---------- UI helpers ---------- */
+function updateCartCount() {
+  const el = document.getElementById('cartCount');
+  if (!el) return;
+  const total = getCart().reduce((s,i)=>s+i.qty,0);
+  el.textContent = total;
+}
+
+/* auto-update cart count on load */
+updateCartCount();
+
+/* ---------- small utility for new product page creation (optional) ---------- */
+/* If you want to add a menu item to "create static product page", admin can export product details. In this system product pages are dynamic using product.html?id=... */
+
+/* ------------- NOTES -------------
+- For production: replace localStorage storage + client auth with a server (Node/Express or serverless functions)
+- For payments: integrate Stripe/PayU/Razorpay on the server; do not accept card details purely on client-side.
+---------------------------------- */
