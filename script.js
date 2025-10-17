@@ -16,7 +16,7 @@ const defaultProducts = [
     priceNum: 699,
     image: "images/pes.jpg",
     description: "Limited streetwear drop — crafted for those who move with purpose.",
-    whatsappLink: "https://example.com/product/perspective" // custom link per product
+    whatsappLink: "https://www.instagram.com/p/DOECmBUgf4o/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" // custom link per product
   },
   {
     id: "mysoul",
@@ -25,7 +25,7 @@ const defaultProducts = [
     priceNum: 699,
     image: "images/shs.jpg",
     description: "A limited run — bold graphics, street-ready fit.",
-    whatsappLink: "https://example.com/product/mysoul" // custom link per product
+    whatsappLink: "https://www.instagram.com/p/DOEBJGnAb9R/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" // custom link per product
   }
 ];
 
