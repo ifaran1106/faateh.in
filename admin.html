@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin | FAATEH Clothing</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo-link" href="index.html"><img src="images/logo.png" alt="FAATEH Logo" class="logo-img"></a>
+    <nav class="nav">
+      <a href="index.html" class="nav-item">Home</a>
+      <a href="shop.html" class="nav-item">Shop</a>
+      <a href="admin.html" class="nav-item active">Admin</a>
+    </nav>
+  </header>
+
+  <main class="admin-main">
+    <section id="authSection" class="card admin-card">
+      <h2>Admin Login</h2>
+      <p>Enter admin ID and password to manage products.</p>
+      <label>Admin ID</label>
+      <input id="adminId" placeholder="admin">
+      <label>Password</label>
+      <input id="adminPass" type="password" placeholder="••••••">
+      <button class="btn" id="loginBtn">Login</button>
+      <p class="small">This is a simple demo auth (client-side). For production use a proper server & secure auth.</p>
+    </section>
+
+    <section id="panel" class="admin-panel" style="display:none;">
+      <h2>Product Manager</h2>
+
+      <div class="admin-actions">
+        <button class="btn" id="newBtn">New product</button>
+        <button class="btn outline" id="logoutBtn">Logout</button>
+      </div>
+
+      <div id="editor" class="admin-editor" style="display:none;">
+        <h3 id="editorTitle">New product</h3>
+        <label>Product ID (no spaces)</label>
+        <input id="prodId" placeholder="perspective">
+
+        <label>Name</label>
+        <input id="prodName">
+
+        <label>Price (text shown)</label>
+        <input id="prodPrice" placeholder="₹699">
+
+        <label>Price (number for totals)</label>
+        <input id="prodPriceNum" placeholder="699" type="number">
+
+        <label>Image URL</label>
+        <input id="prodImage" placeholder="images/pes.jpg or https://...">
+
+        <label>Description</label>
+        <textarea id="prodDesc"></textarea>
+
+        <div style="margin-top:10px;">
+          <button class="btn" id="saveProd">Save product</button>
+          <button class="btn outline" id="cancelEdit">Cancel</button>
+        </div>
+      </div>
+
+      <div id="productListAdmin" class="admin-list"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">© 2025 FAATEH Clothing</footer>
+
+  <script src="script.js"></script>
+  <script>
+    // CLIENT-SIDE ADMIN: Change these credentials if you like.
+    const ADMIN_ID = 'faateh';
+    const ADMIN_PASS = 'faatehadmin'; // NOTE: client-side only. Not secure.
+
+    const authSection = document.getElementById('authSection');
+    const panel = document.getElementById('panel');
+    const loginBtn = document.getElementById('loginBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const newBtn = document.getElementById('newBtn');
+    const editor = document.getElementById('editor');
+    const productListAdmin = document.getElementById('productListAdmin');
+
+    function showEditor(prod) {
+      editor.style.display = 'block';
+      document.getElementById('editorTitle').textContent = prod ? 'Edit product' : 'New product';
+      document.getElementById('prodId').value = prod?.id || '';
+      document.getElementById('prodName').value = prod?.name || '';
+      document.getElementById('prodPrice').value = prod?.price || '';
+      document.getElementById('prodPriceNum').value = prod?.priceNum || '';
+      document.getElementById('prodImage').value = prod?.image || '';
+      document.getElementById('prodDesc').value = prod?.description || '';
+      document.getElementById('prodId').disabled = !!prod;
+      editor.dataset.editing = prod ? prod.id : '';
+    }
+
+    loginBtn.addEventListener('click', () => {
+      const id = document.getElementById('adminId').value.trim();
+      const pass = document.getElementById('adminPass').value;
+      if (id === ADMIN_ID && pass === ADMIN_PASS) {
+        authSection.style.display = 'none';
+        panel.style.display = 'block';
+        renderAdminList();
+      } else {
+        alert('Invalid credentials');
+      }
+    });
+
+    logoutBtn.addEventListener('click', () => {
+      panel.style.display = 'none';
+      authSection.style.display = 'block';
+    });
+
+    newBtn.addEventListener('click', () => showEditor(null));
+    document.getElementById('cancelEdit').addEventListener('click', () => {
+      editor.style.display = 'none';
+    });
+
+    document.getElementById('saveProd').addEventListener('click', () => {
+      const id = document.getElementById('prodId').value.trim();
+      const name = document.getElementById('prodName').value.trim();
+      const price = document.getElementById('prodPrice').value.trim();
+      const priceNum = parseInt(document.getElementById('prodPriceNum').value || '0', 10);
+      const image = document.getElementById('prodImage').value.trim();
+      const description = document.getElementById('prodDesc').value.trim();
+      if (!id || !name || !price) return alert('Provide id, name, price');
+
+      const editing = editor.dataset.editing;
+      let products = getProducts();
+      if (editing) {
+        // update
+        products = products.map(p => p.id === editing ? { ...p, name, price, priceNum, image, description } : p);
+      } else {
+        // ensure unique id
+        if (products.some(p => p.id === id)) return alert('ID already exists');
+        products.unshift({ id, name, price, priceNum, image, description });
+      }
+      saveProducts(products);
+      editor.style.display = 'none';
+      renderAdminList();
+      alert('Saved');
+    });
+
+    function renderAdminList() {
+      const products = getProducts();
+      productListAdmin.innerHTML = '';
+      products.forEach(p => {
+        const row = document.createElement('div');
+        row.className = 'admin-row';
+        row.innerHTML = `
+          <div>
+            <strong>${p.name}</strong> <span class="muted">${p.price}</span><br>
+            <small class="muted">id: ${p.id}</small>
+          </div>
+          <div class="admin-row-actions">
+            <button class="btn small edit" data-id="${p.id}">Edit</button>
+            <button class="btn small outline delete" data-id="${p.id}">Delete</button>
+          </div>
+        `;
+        productListAdmin.appendChild(row);
+      });
+      // events
+      productListAdmin.querySelectorAll('.edit').forEach(b => {
+        b.addEventListener('click', () => {
+          const id = b.dataset.id;
+          const p = getProducts().find(x => x.id === id);
+          showEditor(p);
+        });
+      });
+      productListAdmin.querySelectorAll('.delete').forEach(b => {
+        b.addEventListener('click', () => {
+          if (!confirm('Delete product?')) return;
+          const id = b.dataset.id;
+          const products = getProducts().filter(x => x.id !== id);
+          saveProducts(products);
+          renderAdminList();
+        });
+      });
+    }
+  </script>
+</body>
+</html>
