@@ -1,3 +1,10 @@
+/* script.js
+ - Central product + cart management for the static site.
+ - Products are persisted in localStorage under key "faateh_products".
+ - Cart is stored under "faateh_cart".
+ - Replace phoneNumber with your WhatsApp number (country code + number, no +).
+*/
+
 const phoneNumber = "917620994805"; // replace if needed
 
 /* ---------- DEFAULT PRODUCTS ---------- */
@@ -36,6 +43,7 @@ function getProducts() {
     return defaultProducts.slice();
   }
 }
+
 function saveProducts(arr) {
   localStorage.setItem('faateh_products', JSON.stringify(arr));
 }
@@ -51,10 +59,12 @@ function getCart() {
     return [];
   }
 }
+
 function saveCart(cart) {
   localStorage.setItem('faateh_cart', JSON.stringify(cart));
   updateCartCount();
 }
+
 function addToCart(product, qty = 1) {
   if (!product) return;
   const cart = getCart();
@@ -68,23 +78,26 @@ function addToCart(product, qty = 1) {
       price: product.price,
       priceNum: product.priceNum || 0,
       image: product.image,
-      whatsappLink: product.whatsappLink || "", // store custom link
+      whatsappLink: product.whatsappLink || "",
       qty: qty
     });
   }
   saveCart(cart);
 }
+
 function updateCartQty(index, qty) {
   const cart = getCart();
   if (!cart[index]) return;
   cart[index].qty = qty;
   saveCart(cart);
 }
+
 function removeFromCart(index) {
   const cart = getCart();
   cart.splice(index, 1);
   saveCart(cart);
 }
+
 function clearCart() {
   localStorage.removeItem('faateh_cart');
   updateCartCount();
@@ -109,7 +122,7 @@ function checkoutWhatsApp() {
   let message = "Hey! I'm ordering:\n\n";
   cart.forEach(item => {
     message += `• ${item.name} (x${item.qty}) — ${item.price}\n`;
-    if (item.whatsappLink) message += `${item.whatsappLink}\n`; // use custom link
+    if (item.whatsappLink) message += `${item.whatsappLink}\n`;
   });
 
   const total = cart.reduce((s,i)=>s+i.priceNum*i.qty,0);
