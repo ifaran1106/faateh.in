@@ -113,19 +113,19 @@ function checkoutWhatsApp() {
   const cart = getCart();
   if (!cart || cart.length === 0) return alert("Your cart is empty!");
 
-  let message = "Hey! I'm interested in these products:\n\n";
+  let message = "Hey! I'm ordering:\n\n";
   cart.forEach(item => {
-    message += `• ${item.name} (${item.price}) x${item.qty}\n`;
+    message += `• ${item.name} (x${item.qty}) — ${item.price}\n`;
     if (item.whatsappLink) message += `${item.whatsappLink}\n`;
   });
 
-
   const total = cart.reduce((s,i)=>s+i.priceNum*i.qty,0);
-  message += `Total: ₹${total}\n\nPlease confirm.`;
+  message += `\nTotal: ₹${total}\n\nPlease confirm.`;
 
   const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
   window.open(url, "_blank");
 }
+
 
 /* Bind checkout button */
 const checkoutBtn = document.getElementById("checkoutBtn");
