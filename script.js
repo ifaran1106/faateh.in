@@ -1,10 +1,3 @@
-/* script.js
- - Central product + cart management for the static site.
- - Products are persisted in localStorage under key "faateh_products".
- - Cart is stored under "faateh_cart".
- - Replace phoneNumber with your WhatsApp number (country code + number, no +).
-*/
-
 const phoneNumber = "917620994805"; // replace if needed
 
 /* ---------- DEFAULT PRODUCTS ---------- */
@@ -16,7 +9,7 @@ const defaultProducts = [
     priceNum: 699,
     image: "images/pes.jpg",
     description: "Limited streetwear drop — crafted for those who move with purpose.",
-    whatsappLink: "https://www.instagram.com/p/DOECmBUgf4o/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" // custom link per product
+    whatsappLink: "https://www.instagram.com/p/DOECmBUgf4o/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=="
   },
   {
     id: "mysoul",
@@ -25,7 +18,7 @@ const defaultProducts = [
     priceNum: 699,
     image: "images/shs.jpg",
     description: "A limited run — bold graphics, street-ready fit.",
-    whatsappLink: "https://www.instagram.com/p/DOEBJGnAb9R/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" // custom link per product
+    whatsappLink: "https://www.instagram.com/p/DOEBJGnAb9R/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=="
   }
 ];
 
@@ -75,7 +68,7 @@ function addToCart(product, qty = 1) {
       price: product.price,
       priceNum: product.priceNum || 0,
       image: product.image,
-      whatsappLink: product.whatsappLink || "", // store custom link
+      whatsappLink: product.whatsappLink || "", // ensure custom link is copied
       qty: qty
     });
   }
@@ -116,7 +109,7 @@ function checkoutWhatsApp() {
   let message = "Hey! I'm ordering:\n\n";
   cart.forEach(item => {
     message += `• ${item.name} (x${item.qty}) — ${item.price}\n`;
-    if (item.whatsappLink) message += `${item.whatsappLink}\n`;
+    if (item.whatsappLink) message += `${item.whatsappLink}\n`; // use custom link, not image
   });
 
   const total = cart.reduce((s,i)=>s+i.priceNum*i.qty,0);
@@ -125,7 +118,6 @@ function checkoutWhatsApp() {
   const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
   window.open(url, "_blank");
 }
-
 
 /* Bind checkout button */
 const checkoutBtn = document.getElementById("checkoutBtn");
