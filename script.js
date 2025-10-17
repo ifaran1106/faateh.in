@@ -117,7 +117,7 @@ function checkoutWhatsApp() {
   cart.forEach(item => {
     message += `• ${item.name} (${item.price}) x${item.qty}\n`;
     if (item.whatsappLink) message += `Link: ${item.whatsappLink}\n`;
-    message += `${item.image}\n\n`;
+    message += `${item.whatsappLink}\n\n`;
   });
 
   const total = cart.reduce((s,i)=>s+i.priceNum*i.qty,0);
