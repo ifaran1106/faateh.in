@@ -68,7 +68,7 @@ function addToCart(product, qty = 1) {
       price: product.price,
       priceNum: product.priceNum || 0,
       image: product.image,
-      whatsappLink: product.whatsappLink || "", // ensure custom link is copied
+      whatsappLink: product.whatsappLink || "", // store custom link
       qty: qty
     });
   }
@@ -109,7 +109,7 @@ function checkoutWhatsApp() {
   let message = "Hey! I'm ordering:\n\n";
   cart.forEach(item => {
     message += `• ${item.name} (x${item.qty}) — ${item.price}\n`;
-    if (item.whatsappLink) message += `${item.whatsappLink}\n`; // use custom link, not image
+    if (item.whatsappLink) message += `${item.whatsappLink}\n`; // use custom link
   });
 
   const total = cart.reduce((s,i)=>s+i.priceNum*i.qty,0);
