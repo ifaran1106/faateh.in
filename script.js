@@ -26,7 +26,7 @@ const defaultProducts = [
     image: "images/shs.jpg",
     description: "A limited run — bold graphics, street-ready fit.",
     whatsappLink: "https://www.instagram.com/p/DOEBJGnAb9R/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=="
-  }
+  },
 
 {
     id: "test",
