@@ -8,15 +8,18 @@
 </head>
 <body>
   <header class="site-header">
+    <!-- LOGO: replace images/logo.png with your file -->
     <a class="logo-link" href="index.html">
       <img src="images/logo.png" alt="FAATEH Logo" class="logo-img">
     </a>
+
     <nav class="nav">
       <a href="index.html" class="nav-item active">Home</a>
       <a href="shop.html" class="nav-item">Shop</a>
       <a href="about.html" class="nav-item">About</a>
       <a href="contact.html" class="nav-item">Contact</a>
       <a href="cart.html" class="nav-item cart-link">Cart (<span id="cartCount">0</span>)</a>
+      <a href="admin.html" class="nav-item admin-link">Admin</a>
     </nav>
   </header>
 
@@ -47,24 +50,24 @@
 
   <script src="script.js"></script>
   <script>
-    // Render 3 featured products on home (pulls from the same products defined in script.js)
+    // Render featured (first 3 products)
     (function renderFeatured() {
-      const featured = products.slice(0, 3);
+      const featured = getProducts().slice(0, 3);
       const el = document.getElementById('featuredGrid');
-      if (!el) return;
       featured.forEach(p => {
-        const card = document.createElement('a');
-        card.className = 'feat-card';
-        card.href = p.page;
-        card.innerHTML = `
+        const a = document.createElement('a');
+        a.className = 'feat-card';
+        a.href = `product.html?id=${encodeURIComponent(p.id)}`;
+        a.innerHTML = `
           <div class="feat-img"><img src="${p.image}" alt="${p.name}"></div>
           <div class="feat-body">
             <div class="feat-name">${p.name}</div>
             <div class="feat-price">${p.price}</div>
           </div>
         `;
-        el.appendChild(card);
+        el.appendChild(a);
       });
+      updateCartCount();
     })();
   </script>
 </body>
