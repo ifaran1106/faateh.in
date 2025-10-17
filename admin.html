@@ -56,6 +56,9 @@
         <label>Description</label>
         <textarea id="prodDesc"></textarea>
 
+        <label>WhatsApp Link (optional)</label>
+        <input id="prodWhatsappLink" placeholder="https://...">
+
         <div style="margin-top:10px;">
           <button class="btn" id="saveProd">Save product</button>
           <button class="btn outline" id="cancelEdit">Cancel</button>
@@ -70,9 +73,8 @@
 
   <script src="script.js"></script>
   <script>
-    // CLIENT-SIDE ADMIN: Change these credentials if you like.
     const ADMIN_ID = 'faateh';
-    const ADMIN_PASS = 'faatehadmin'; // NOTE: client-side only. Not secure.
+    const ADMIN_PASS = 'faatehadmin';
 
     const authSection = document.getElementById('authSection');
     const panel = document.getElementById('panel');
@@ -91,6 +93,7 @@
       document.getElementById('prodPriceNum').value = prod?.priceNum || '';
       document.getElementById('prodImage').value = prod?.image || '';
       document.getElementById('prodDesc').value = prod?.description || '';
+      document.getElementById('prodWhatsappLink').value = prod?.whatsappLink || '';
       document.getElementById('prodId').disabled = !!prod;
       editor.dataset.editing = prod ? prod.id : '';
     }
@@ -124,18 +127,21 @@
       const priceNum = parseInt(document.getElementById('prodPriceNum').value || '0', 10);
       const image = document.getElementById('prodImage').value.trim();
       const description = document.getElementById('prodDesc').value.trim();
+      const whatsappLink = document.getElementById('prodWhatsappLink').value.trim();
+
       if (!id || !name || !price) return alert('Provide id, name, price');
 
       const editing = editor.dataset.editing;
       let products = getProducts();
       if (editing) {
-        // update
-        products = products.map(p => p.id === editing ? { ...p, name, price, priceNum, image, description } : p);
+        products = products.map(p => 
+          p.id === editing ? { ...p, name, price, priceNum, image, description, whatsappLink } : p
+        );
       } else {
-        // ensure unique id
         if (products.some(p => p.id === id)) return alert('ID already exists');
-        products.unshift({ id, name, price, priceNum, image, description });
+        products.unshift({ id, name, price, priceNum, image, description, whatsappLink });
       }
+
       saveProducts(products);
       editor.style.display = 'none';
       renderAdminList();
@@ -160,7 +166,8 @@
         `;
         productListAdmin.appendChild(row);
       });
-      // events
+
+      // attach events
       productListAdmin.querySelectorAll('.edit').forEach(b => {
         b.addEventListener('click', () => {
           const id = b.dataset.id;
