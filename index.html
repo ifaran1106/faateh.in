@@ -1,74 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FAATEH Clothing</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
 </head>
 <body>
-  <header class="site-header">
-    <!-- LOGO: replace images/logo.png with your file -->
-    <a class="logo-link" href="index.html">
-      <img src="images/logo.png" alt="FAATEH Logo" class="logo-img">
-    </a>
-
-    <nav class="nav">
-      <a href="index.html" class="nav-item active">Home</a>
-      <a href="shop.html" class="nav-item">Shop</a>
-      <a href="about.html" class="nav-item">About</a>
-      <a href="contact.html" class="nav-item">Contact</a>
-      <a href="cart.html" class="nav-item cart-link">Cart (<span id="cartCount">0</span>)</a>
-      <a href="admin.html" class="nav-item admin-link">Admin</a>
+  <!-- HEADER -->
+  <header class="header">
+    <img src="images/logo.png" alt="FAATEH Clothing Logo" class="logo">
+    <nav>
+      <input type="text" id="search" placeholder="Search products...">
+      <div class="cart-icon">🛒 <span id="cart-count">0</span></div>
     </nav>
   </header>
 
-  <main>
-    <section class="hero">
-      <div class="hero-inner">
-        <h1>Rule the Streets.</h1>
-        <p>Minimal fits. Maximum presence. Limited drops — move fast.</p>
-        <a class="btn" href="shop.html">Shop Drop</a>
-      </div>
-    </section>
+  <!-- AD BANNER -->
+  <section class="ad-banner">
+    <img src="images/banner.jpg" alt="Ad Banner">
+    <a href="#shop" class="btn">Shop Now</a>
+  </section>
 
-    <section class="featured">
-      <h2>Featured Drops</h2>
-      <div id="featuredGrid" class="featured-grid"></div>
-    </section>
+  <!-- POPULAR PRODUCTS -->
+  <section id="shop" class="popular-products">
+    <h2>Popular Products</h2>
+    <div class="products-grid" id="products-grid">
+      <!-- Products added via JS -->
+    </div>
+  </section>
 
-    <section class="about-preview">
-      <h3>About FAATEH</h3>
-      <p>FAATEH Clothing is more than a brand — it’s an identity. Built for the bold, made for the streets.</p>
-      <a class="link-muted" href="about.html">Learn more →</a>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <p>© 2025 FAATEH Clothing</p>
+  <!-- CONTACT -->
+  <footer class="footer">
+    <p>Contact us:</p>
+    <a href="https://wa.me/917620994805" target="_blank">
+      <img src="images/whatsapp.png" alt="WhatsApp" class="icon">
+    </a>
+    <a href="https://www.instagram.com/faatehclothing/?hl=en" target="_blank">
+      <img src="images/instagram.png" alt="Instagram" class="icon">
+    </a>
   </footer>
-
-  <script src="script.js"></script>
-  <script>
-    // Render featured (first 3 products)
-    (function renderFeatured() {
-      const featured = getProducts().slice(0, 3);
-      const el = document.getElementById('featuredGrid');
-      featured.forEach(p => {
-        const a = document.createElement('a');
-        a.className = 'feat-card';
-        a.href = `product.html?id=${encodeURIComponent(p.id)}`;
-        a.innerHTML = `
-          <div class="feat-img"><img src="${p.image}" alt="${p.name}"></div>
-          <div class="feat-body">
-            <div class="feat-name">${p.name}</div>
-            <div class="feat-price">${p.price}</div>
-          </div>
-        `;
-        el.appendChild(a);
-      });
-      updateCartCount();
-    })();
-  </script>
 </body>
 </html>
