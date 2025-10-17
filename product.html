@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Product | FAATEH Clothing</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo-link" href="index.html"><img src="images/logo.png" alt="FAATEH Logo" class="logo-img"></a>
+    <nav class="nav">
+      <a href="index.html" class="nav-item">Home</a>
+      <a href="shop.html" class="nav-item">Shop</a>
+      <a href="about.html" class="nav-item">About</a>
+      <a href="contact.html" class="nav-item">Contact</a>
+      <a href="cart.html" class="nav-item cart-link">Cart (<span id="cartCount">0</span>)</a>
+    </nav>
+  </header>
+
+  <main class="product-page">
+    <div class="product-wrap">
+      <div class="product-gallery">
+        <img id="prodImage" src="" alt="">
+      </div>
+      <div class="product-details">
+        <h1 id="prodName">Product</h1>
+        <p class="price" id="prodPrice">₹0</p>
+        <p class="desc" id="prodDesc"></p>
+
+        <label for="qty">Quantity</label>
+        <input id="qty" type="number" min="1" value="1" class="qty-input">
+
+        <div class="product-actions">
+          <button class="btn" id="addToCartBtn">Add to cart</button>
+          <button class="btn outline" id="orderWhatsapp">Order via WhatsApp</button>
+        </div>
+
+        <p class="small">Fast WhatsApp ordering available — or use the cart & secure checkout.</p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">© 2025 FAATEH Clothing</footer>
+
+  <script src="script.js"></script>
+  <script>
+    // Read product id from query
+    function getParam(name) {
+      const u = new URLSearchParams(location.search);
+      return u.get(name);
+    }
+    const id = getParam('id');
+    const product = getProducts().find(p => p.id === id);
+    if (!product) {
+      document.querySelector('.product-wrap').innerHTML = '<p>Product not found.</p>';
+    } else {
+      document.getElementById('prodImage').src = product.image;
+      document.getElementById('prodImage').alt = product.name;
+      document.getElementById('prodName').textContent = product.name;
+      document.getElementById('prodPrice').textContent = product.price;
+      document.getElementById('prodDesc').textContent = product.description || '';
+    }
+
+    document.getElementById('addToCartBtn').addEventListener('click', () => {
+      const qty = Math.max(1, parseInt(document.getElementById('qty').value || 1));
+      addToCart(product, qty);
+      updateCartCount();
+      alert('Added to cart');
+    });
+
+    document.getElementById('orderWhatsapp').addEventListener('click', () => {
+      const qty = Math.max(1, parseInt(document.getElementById('qty').value || 1));
+      const message = `Hey! I'm interested in this product:\n\n• ${product.name} (x${qty}) — ${product.price}\n${product.image}\n\nPlease confirm availability.`;
+      window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
+    });
+  </script>
+</body>
+</html>
