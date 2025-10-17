@@ -27,6 +27,17 @@ const defaultProducts = [
     description: "A limited run — bold graphics, street-ready fit.",
     whatsappLink: "https://www.instagram.com/p/DOEBJGnAb9R/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=="
   }
+
+{
+    id: "test",
+    name: "test",
+    price: "₹699",
+    priceNum: 699,
+    image: "images/pes2.jpg",
+    description: "A limited run — bold graphics, street-ready fit.",
+    whatsappLink: "https://www.instagram.com/p/DOEBJGnAb9R/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=="
+  }
+ 
 ];
 
 /* ---------- product storage helpers ---------- */
