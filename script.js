@@ -110,3 +110,25 @@ updateCartCount();
 - For production: replace localStorage storage + client auth with a server (Node/Express or serverless functions)
 - For payments: integrate Stripe/PayU/Razorpay on the server; do not accept card details purely on client-side.
 ---------------------------------- */
+
+
+/* ---------- WhatsApp Checkout ---------- */
+function checkoutWhatsApp() {
+  const cart = getCart();
+  if (!cart || cart.length === 0) return alert("Your cart is empty!");
+
+  let message = "Hey! I'm interested in these products:\n\n";
+  cart.forEach(item => {
+    message += `• ${item.name} (${item.price}) x${item.qty}\n${item.image}\n\n`;
+  });
+
+  const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+  window.open(url, "_blank");
+}
+
+/* Bind checkout button (if exists) */
+const checkoutBtn = document.getElementById("checkoutBtn");
+if (checkoutBtn) {
+  checkoutBtn.addEventListener("click", checkoutWhatsApp);
+}
+
