@@ -7,7 +7,7 @@
 
 const phoneNumber = "917620994805"; // replace if needed
 
-/* ---------- DEFAULT PRODUCTS (used when localStorage empty) ---------- */
+/* ---------- DEFAULT PRODUCTS ---------- */
 const defaultProducts = [
   {
     id: "perspective",
@@ -76,20 +76,24 @@ function addToCart(product, qty = 1) {
     });
   }
   saveCart(cart);
+  updateCartCount();
 }
 function updateCartQty(index, qty) {
   const cart = getCart();
   if (!cart[index]) return;
   cart[index].qty = qty;
   saveCart(cart);
+  updateCartCount();
 }
 function removeFromCart(index) {
   const cart = getCart();
   cart.splice(index, 1);
   saveCart(cart);
+  updateCartCount();
 }
 function clearCart() {
   localStorage.removeItem('faateh_cart');
+  updateCartCount();
 }
 
 /* ---------- UI helpers ---------- */
@@ -102,15 +106,6 @@ function updateCartCount() {
 
 /* auto-update cart count on load */
 updateCartCount();
-
-/* ---------- small utility for new product page creation (optional) ---------- */
-/* If you want to add a menu item to "create static product page", admin can export product details. In this system product pages are dynamic using product.html?id=... */
-
-/* ------------- NOTES -------------
-- For production: replace localStorage storage + client auth with a server (Node/Express or serverless functions)
-- For payments: integrate Stripe/PayU/Razorpay on the server; do not accept card details purely on client-side.
----------------------------------- */
-
 
 /* ---------- WhatsApp Checkout ---------- */
 function checkoutWhatsApp() {
@@ -126,9 +121,14 @@ function checkoutWhatsApp() {
   window.open(url, "_blank");
 }
 
-/* Bind checkout button (if exists) */
+/* Bind checkout button */
 const checkoutBtn = document.getElementById("checkoutBtn");
 if (checkoutBtn) {
   checkoutBtn.addEventListener("click", checkoutWhatsApp);
 }
 
+/* ---------- Notes ----------
+- Card payment simulation removed.
+- Cart + products fully functional.
+- WhatsApp is now the only checkout option.
+---------------------------------- */
