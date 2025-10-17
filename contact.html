@@ -1,92 +1,63 @@
-/* ---------------- CONTACT PAGE ---------------- */
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Contact | FAATEH Clothing</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-container">
+      <a class="logo-link" href="index.html">
+        <img src="images/logo.png" alt="FAATEH Logo" class="logo-img" />
+      </a>
+      <nav class="nav">
+        <a href="index.html" class="nav-item">Home</a>
+        <a href="shop.html" class="nav-item">Shop</a>
+        <a href="about.html" class="nav-item">About</a>
+        <a href="contact.html" class="nav-item active">Contact</a>
+        <a href="cart.html" class="nav-item cart-link">
+          Cart (<span id="cartCount">0</span>)
+        </a>
+      </nav>
+    </div>
+  </header>
 
-.header-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  max-width: 1200px;
-  margin: auto;
-  padding: 1rem 2rem;
-}
+  <main class="contact-main">
+    <section class="contact">
+      <h2 class="section-title">Contact Us</h2>
+      <p class="contact-intro">
+        Got a question, collab idea, or business inquiry? We’d love to hear from you.
+      </p>
 
-.logo-img {
-  height: 60px;
-  width: auto;
-}
+      <div class="contact-items">
+        <div class="contact-item">
+          <span class="icon">📞</span>
+          <span class="text">7620994805, 9145619699, 7276883238</span>
+        </div>
+        <div class="contact-item">
+          <span class="icon">📸</span>
+          <span class="text">
+            <a href="https://www.instagram.com/faatehclothing/?hl=en" target="_blank">
+              @faatehclothing
+            </a>
+          </span>
+        </div>
+        <div class="contact-item">
+          <span class="icon">💬</span>
+          <span class="text">
+            <a href="https://wa.me/917620994805" target="_blank">
+              Message us on WhatsApp
+            </a>
+          </span>
+        </div>
+      </div>
+    </section>
+  </main>
 
-.contact-main {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 70vh;
-  background: linear-gradient(to bottom, #000, #0a0a0a);
-  padding: 3rem 1rem;
-}
+  <footer class="site-footer">© 2025 FAATEH Clothing</footer>
 
-.contact {
-  text-align: center;
-  color: #fff;
-  max-width: 700px;
-  margin: auto;
-}
-
-.section-title {
-  font-size: 2.2rem;
-  margin-bottom: 1rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-}
-
-.contact-intro {
-  color: #aaa;
-  font-size: 1.1rem;
-  margin-bottom: 2.5rem;
-}
-
-.contact-items {
-  display: flex;
-  flex-direction: column;
-  gap: 1.3rem;
-  align-items: center;
-}
-
-.contact-item {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  background: #111;
-  padding: 1rem 1.5rem;
-  border-radius: 14px;
-  width: 100%;
-  max-width: 420px;
-  font-size: 1.1rem;
-  transition: transform 0.2s, background 0.2s;
-}
-
-.contact-item:hover {
-  background: #1a1a1a;
-  transform: translateY(-4px);
-}
-
-.contact-item .icon {
-  font-size: 1.5rem;
-}
-
-.contact-item a {
-  color: #25D366;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.contact-item a:hover {
-  text-decoration: underline;
-}
-
-/* Footer */
-.site-footer {
-  text-align: center;
-  color: #777;
-  padding: 2rem 0;
-  font-size: 0.9rem;
-  border-top: 1px solid #222;
-}
+  <script src="script.js"></script>
+</body>
+</html>
