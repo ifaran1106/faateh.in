@@ -1,27 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Shop | FAATEH Clothing</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header>
-    <h1>FAATEH CLOTHING</h1>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="shop.html" class="active">Shop</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
+  <header class="site-header">
+    <a class="logo-link" href="index.html">
+      <img src="images/logo.png" alt="FAATEH Logo" class="logo-img">
+    </a>
+    <nav class="nav">
+      <a href="index.html" class="nav-item">Home</a>
+      <a href="shop.html" class="nav-item active">Shop</a>
+      <a href="about.html" class="nav-item">About</a>
+      <a href="contact.html" class="nav-item">Contact</a>
+      <a href="cart.html" class="nav-item cart-link">Cart (<span id="cartCount">0</span>)</a>
     </nav>
   </header>
 
-  <section class="product-grid" id="productList"></section>
+  <main>
+    <section class="shop-hero">
+      <h2>All Products</h2>
+      <p>Limited quantities. If you like it — grab it.</p>
+    </section>
 
-  <button id="checkoutBtn">Checkout on WhatsApp</button>
+    <section class="product-grid" id="productList"></section>
 
-  <footer>© 2025 FAATEH Clothing</footer>
+  </main>
+
+  <button id="checkoutBtn" class="floating-btn">Checkout</button>
+
+  <footer class="site-footer">© 2025 FAATEH Clothing</footer>
 
   <script src="script.js"></script>
 </body>
