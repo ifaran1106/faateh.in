@@ -482,3 +482,34 @@ body {
 .contact-item a:hover {
   text-decoration: underline;
 }
+
+
+.about-main {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 4rem 1rem;
+  min-height: 80vh;
+  background: linear-gradient(180deg, #000 0%, #0b0b0b 100%);
+}
+
+.about {
+  max-width: 750px;
+  text-align: center;
+  color: var(--white);
+}
+
+.about .section-title {
+  font-size: 2.2rem;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.about-text {
+  font-size: 1.05rem;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
