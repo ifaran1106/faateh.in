@@ -116,9 +116,9 @@ function checkoutWhatsApp() {
   let message = "Hey! I'm interested in these products:\n\n";
   cart.forEach(item => {
     message += `• ${item.name} (${item.price}) x${item.qty}\n`;
-    if (item.whatsappLink) message += `Link: ${item.whatsappLink}\n`;
-    message += `${item.whatsappLink}\n\n`;
+    if (item.whatsappLink) message += `${item.whatsappLink}\n`;
   });
+
 
   const total = cart.reduce((s,i)=>s+i.priceNum*i.qty,0);
   message += `Total: ₹${total}\n\nPlease confirm.`;
