@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Your Cart | FAATEH Clothing</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo-link" href="index.html"><img src="images/logo.png" alt="FAATEH Logo" class="logo-img"></a>
+    <nav class="nav">
+      <a href="index.html" class="nav-item">Home</a>
+      <a href="shop.html" class="nav-item">Shop</a>
+      <a href="about.html" class="nav-item">About</a>
+      <a href="contact.html" class="nav-item">Contact</a>
+      <a href="cart.html" class="nav-item active cart-link">Cart (<span id="cartCount">0</span>)</a>
+    </nav>
+  </header>
+
+  <main class="cart-main">
+    <h2>Your Cart</h2>
+    <div id="cartContainer" class="cart-container"></div>
+
+    <div class="cart-summary" id="cartSummary" style="display:none;">
+      <div>Total: <span id="cartTotal">₹0</span></div>
+      <div class="cart-actions">
+        <a href="#" id="checkoutStripe" class="btn">Pay by Card (Simulate)</a>
+        <a href="#" id="checkoutWhatsapp" class="btn outline">Checkout via WhatsApp</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">© 2025 FAATEH Clothing</footer>
+
+  <script src="script.js"></script>
+  <script>
+    // Render cart items
+    function renderCart() {
+      const container = document.getElementById('cartContainer');
+      container.innerHTML = '';
+      const cart = getCart();
+      if (cart.length === 0) {
+        container.innerHTML = '<p>Your cart is empty. <a href="shop.html">Shop now</a></p>';
+        document.getElementById('cartSummary').style.display = 'none';
+        updateCartCount();
+        return;
+      }
+      document.getElementById('cartSummary').style.display = 'block';
+      cart.forEach((item, idx) => {
+        const row = document.createElement('div');
+        row.className = 'cart-row';
+        row.innerHTML = `
+          <div class="cart-row-left">
+            <img src="${item.image}" alt="${item.name}">
+            <div>
+              <div class="cart-name">${item.name}</div>
+              <div class="cart-price">${item.price} × ${item.qty}</div>
+            </div>
+          </div>
+          <div class="cart-row-right">
+            <input type="number" min="1" value="${item.qty}" data-idx="${idx}" class="cart-qty">
+            <button class="btn small remove" data-idx="${idx}">Remove</button>
+          </div>
+        `;
+        container.appendChild(row);
+      });
+
+      // totals
+      const total = cart.reduce((s, it) => s + (it.priceNum * it.qty), 0);
+      document.getElementById('cartTotal').textContent = `₹${total}`;
+
+      // attach events
+      document.querySelectorAll('.cart-qty').forEach(inp => {
+        inp.addEventListener('change', e => {
+          const idx = parseInt(e.target.dataset.idx, 10);
+          const val = Math.max(1, parseInt(e.target.value || 1));
+          updateCartQty(idx, val);
+          renderCart();
+        });
+      });
+      document.querySelectorAll('.remove').forEach(btn => {
+        btn.addEventListener('click', e => {
+          const idx = parseInt(e.target.dataset.idx, 10);
+          removeFromCart(idx);
+          renderCart();
+        });
+      });
+
+      updateCartCount();
+    }
+
+    document.getElementById('checkoutWhatsapp').addEventListener('click', (e) => {
+      e.preventDefault();
+      const cart = getCart();
+      if (cart.length === 0) return alert('Cart empty');
+      let message = "Hey! I'm ordering:\n\n";
+      cart.forEach(it => {
+        message += `• ${it.name} (x${it.qty}) — ₹${it.priceNum}\n${it.image}\n\n`;
+      });
+      message += `Total: ₹${cart.reduce((s,i)=>s+i.priceNum*i.qty,0)}\n\nPlease confirm.`;
+      window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
+    });
+
+    document.getElementById('checkoutStripe').addEventListener('click', (e) => {
+      e.preventDefault();
+      // Simulate card payment — opens checkout simulation page
+      if (getCart().length === 0) return alert('Cart empty');
+      window.location.href = 'checkout.html';
+    });
+
+    renderCart();
+  </script>
+</body>
+</html>
