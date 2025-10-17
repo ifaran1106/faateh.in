@@ -15,7 +15,8 @@ const defaultProducts = [
     price: "₹699",
     priceNum: 699,
     image: "images/pes.jpg",
-    description: "Limited streetwear drop — crafted for those who move with purpose."
+    description: "Limited streetwear drop — crafted for those who move with purpose.",
+    whatsappLink: "https://example.com/product/perspective" // custom link per product
   },
   {
     id: "mysoul",
@@ -23,7 +24,8 @@ const defaultProducts = [
     price: "₹699",
     priceNum: 699,
     image: "images/shs.jpg",
-    description: "A limited run — bold graphics, street-ready fit."
+    description: "A limited run — bold graphics, street-ready fit.",
+    whatsappLink: "https://example.com/product/mysoul" // custom link per product
   }
 ];
 
@@ -58,6 +60,7 @@ function getCart() {
 }
 function saveCart(cart) {
   localStorage.setItem('faateh_cart', JSON.stringify(cart));
+  updateCartCount();
 }
 function addToCart(product, qty = 1) {
   if (!product) return;
@@ -72,24 +75,22 @@ function addToCart(product, qty = 1) {
       price: product.price,
       priceNum: product.priceNum || 0,
       image: product.image,
+      whatsappLink: product.whatsappLink || "", // store custom link
       qty: qty
     });
   }
   saveCart(cart);
-  updateCartCount();
 }
 function updateCartQty(index, qty) {
   const cart = getCart();
   if (!cart[index]) return;
   cart[index].qty = qty;
   saveCart(cart);
-  updateCartCount();
 }
 function removeFromCart(index) {
   const cart = getCart();
   cart.splice(index, 1);
   saveCart(cart);
-  updateCartCount();
 }
 function clearCart() {
   localStorage.removeItem('faateh_cart');
@@ -114,8 +115,13 @@ function checkoutWhatsApp() {
 
   let message = "Hey! I'm interested in these products:\n\n";
   cart.forEach(item => {
-    message += `• ${item.name} (${item.price}) x${item.qty}\n${item.image}\n\n`;
+    message += `• ${item.name} (${item.price}) x${item.qty}\n`;
+    if (item.whatsappLink) message += `Link: ${item.whatsappLink}\n`;
+    message += `${item.image}\n\n`;
   });
+
+  const total = cart.reduce((s,i)=>s+i.priceNum*i.qty,0);
+  message += `Total: ₹${total}\n\nPlease confirm.`;
 
   const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
   window.open(url, "_blank");
@@ -126,9 +132,3 @@ const checkoutBtn = document.getElementById("checkoutBtn");
 if (checkoutBtn) {
   checkoutBtn.addEventListener("click", checkoutWhatsApp);
 }
-
-/* ---------- Notes ----------
-- Card payment simulation removed.
-- Cart + products fully functional.
-- WhatsApp is now the only checkout option.
----------------------------------- */
