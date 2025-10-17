@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Shop | FAATEH Clothing</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header class="site-header">
@@ -18,72 +18,38 @@
     </nav>
   </header>
 
-  <main>
-    <section class="shop-hero">
-      <h2>All Products</h2>
-      <p>Limited quantities. If you like it — grab it.</p>
-    </section>
+  <main class="product-grid" id="productList"></main>
 
-    <section class="product-grid" id="productList"></section>
-  </main>
-
-  <button id="checkoutBtn" class="floating-btn">Checkout</button>
+  <button id="checkoutBtn" class="floating-btn">Checkout via WhatsApp</button>
 
   <footer class="site-footer">© 2025 FAATEH Clothing</footer>
 
   <script src="script.js"></script>
   <script>
-    // Render all products as grid cards
-    (function renderProducts() {
-      const list = document.getElementById('productList');
-      const all = getProducts();
-      all.forEach(p => {
-        const card = document.createElement('article');
-        card.className = 'card';
-        card.innerHTML = `
-          <a class="card-link" href="product.html?id=${encodeURIComponent(p.id)}" title="${p.name}">
-            <div class="image-container"><img src="${p.image}" alt="${p.name}"></div>
-            <div class="card-content">
-              <div class="product-name">${p.name}</div>
-              <div class="price">${p.price}</div>
-            </div>
-          </a>
-          <div class="card-actions">
-            <button class="btn small add-cart" data-id="${p.id}">Add to cart</button>
-            <button class="btn outline small whatsapp" data-id="${p.id}">WhatsApp</button>
-          </div>
-        `;
-        list.appendChild(card);
-      });
+    const container = document.getElementById("productList");
+    const productsArr = getProducts();
 
-      // hook up add to cart & WhatsApp
-      document.querySelectorAll('.add-cart').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const id = btn.dataset.id;
-          const prod = getProducts().find(x => x.id === id);
-          addToCart(prod, 1);
-          updateCartCount();
-          animateAdd(btn);
-        });
-      });
-      document.querySelectorAll('.whatsapp').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const id = btn.dataset.id;
-          const p = getProducts().find(x => x.id === id);
-          const msg = `Hey! I'm interested in ${p.name} — ${p.price}\n${p.image}\nPlease confirm availability.`;
-          window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(msg)}`, '_blank');
-        });
-      });
-    })();
+    productsArr.forEach(p => {
+      const card = document.createElement("div");
+      card.className = "card";
 
-    document.getElementById('checkoutBtn').addEventListener('click', () => {
-      window.location.href = 'cart.html';
+      card.innerHTML = `
+        <div class="image-container">
+          <img src="${p.image}" alt="${p.name}">
+        </div>
+        <div class="card-content">
+          <div class="product-name">${p.name}</div>
+          <div class="price">${p.price}</div>
+          <button class="btn small add-cart">Add to Cart</button>
+        </div>
+      `;
+      container.appendChild(card);
+
+      card.querySelector(".add-cart").addEventListener("click", () => {
+        addToCart(p);
+        alert(`${p.name} added to cart!`);
+      });
     });
-
-    function animateAdd(el) {
-      el.textContent = 'Added';
-      setTimeout(() => el.textContent = 'Add to cart', 900);
-    }
   </script>
 </body>
 </html>
